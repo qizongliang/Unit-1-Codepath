@@ -1,20 +1,26 @@
 package com.example.flixster.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.flixster.DetailActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -30,7 +36,7 @@ public class MovieAdapter extends RecyclerView.Adapter{
 
     @Override
     public int getItemViewType(int position) {
-        if(movies.get(position).getStars() > 5){
+        if(movies.get(position).getStars() > 5.0){
             return 0;
         }
         return 1;
@@ -41,6 +47,7 @@ public class MovieAdapter extends RecyclerView.Adapter{
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view;
+
 
         if(viewType == 0){
             view = layoutInflater.inflate(R.layout.item_movie_5star_above,parent,false);
@@ -59,16 +66,23 @@ public class MovieAdapter extends RecyclerView.Adapter{
         String imageUrl;
         int loadingimageresource, errorimageresource;
 
+        if(movies.get(position).getStars()> 5.0){
 
-
-
-        if(movies.get(position).getStars()> 5){
             Star_5_movie popular_movie = (Star_5_movie)holder;
-
             imageUrl = movies.get(position).getBackdropPath();
             loadingimageresource = R.drawable.backdrop_loading;
             errorimageresource = R.drawable.backdrop_error;
             Glide.with(context).load(imageUrl).placeholder(loadingimageresource).error(errorimageresource).into(popular_movie.backdrop_image);
+            popular_movie.container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent (context, DetailActivity.class);
+                    i.putExtra("title", movies.get(position).getTitle());
+                    i.putExtra("movie", Parcels.wrap(movies.get(position)));
+                    context.startActivity(i);
+                    //Toast.makeText(context,movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                }
+            });
             //bind view holder 5 star
         }else{
             normal_movie normalMovie = (normal_movie) holder;
@@ -85,7 +99,16 @@ public class MovieAdapter extends RecyclerView.Adapter{
                 loadingimageresource = R.drawable.poster_loading;
             }
             Glide.with(context).load(imageUrl).placeholder(loadingimageresource).error(errorimageresource).into(normalMovie.ivPoster);
-
+            normalMovie.container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent (context, DetailActivity.class);
+                    i.putExtra("title", movies.get(position).getTitle());
+                    i.putExtra("movie", Parcels.wrap(movies.get(position)));
+                    context.startActivity(i);
+                    //Toast.makeText(context,movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                }
+            });
             //bind normal movies view holder
         }
     }
@@ -97,21 +120,24 @@ public class MovieAdapter extends RecyclerView.Adapter{
 
     class Star_5_movie extends RecyclerView.ViewHolder{
         ImageView backdrop_image;
+        RelativeLayout container;
         public Star_5_movie(@NonNull View itemView){
             super(itemView);
             backdrop_image = itemView.findViewById(R.id.backdrop_image);
+            container = itemView.findViewById(R.id.container);
         }
     }
     class normal_movie extends RecyclerView.ViewHolder{
         TextView tvTitle;
         TextView tvOverview;
         ImageView ivPoster;
-
+        RelativeLayout container;
         public normal_movie(@NonNull View itemView){
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+            container = itemView.findViewById(R.id.container);
         }
     }
 

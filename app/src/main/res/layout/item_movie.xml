@@ -2,16 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        app:cardElevation ='10dp'
-        app:cardCornerRadius="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
         app:cardBackgroundColor="#959595"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        app:cardCornerRadius="10dp"
+        app:cardElevation='10dp'>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,34 +26,34 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
             <LinearLayout
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="5dp"
-                android:layout_toEndOf="@+id/ivPoster"
-                android:textSize="24sp"
-                tools:text="Fast Furious Presents: Hobbs Shaw" />
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/ivPoster"
+                    android:textSize="24sp"
+                    tools:text="Fast Furious Presents: Hobbs Shaw" />
 
-            <TextView
-                android:id="@+id/tvOverview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvTitle"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_toEndOf="@+id/ivPoster"
-                tools:text="A spinoff of The Fate of the Furious, focusing on Johnson's US diplomatic Security Agent Luke Hobbs forming an unlikely alliance with Statham's Deckard Shaw" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/tvOverview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTitle"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_toEndOf="@+id/ivPoster"
+                    tools:text="A spinoff of The Fate of the Furious, focusing on Johnson's US diplomatic Security Agent Luke Hobbs forming an unlikely alliance with Statham's Deckard Shaw" />
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

@@ -2,15 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <androidx.cardview.widget.CardView
-        app:cardElevation ='10dp'
-        app:cardCornerRadius="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
         app:cardBackgroundColor="#959595"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        app:cardCornerRadius="10dp"
+        app:cardElevation='10dp'>
 
         <ImageView
             android:id="@+id/backdrop_image"
