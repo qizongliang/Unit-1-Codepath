@@ -1,18 +1,20 @@
 package com.example.flixster.adapters;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.text.Layout;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +25,8 @@ import com.example.flixster.models.Movie;
 import org.parceler.Parcels;
 
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MovieAdapter extends RecyclerView.Adapter{
 
@@ -63,6 +67,7 @@ public class MovieAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         //tvTitle.setText(movie.getTitle());
         //tvOverview.setText(movie.getOverview());
+
         String imageUrl;
         int loadingimageresource, errorimageresource;
 
@@ -72,14 +77,15 @@ public class MovieAdapter extends RecyclerView.Adapter{
             imageUrl = movies.get(position).getBackdropPath();
             loadingimageresource = R.drawable.backdrop_loading;
             errorimageresource = R.drawable.backdrop_error;
-            Glide.with(context).load(imageUrl).placeholder(loadingimageresource).error(errorimageresource).into(popular_movie.backdrop_image);
+
+            Glide.with(context).load(imageUrl).placeholder(loadingimageresource).error(errorimageresource).transform(new RoundedCornersTransformation(30, 10)).into(popular_movie.backdrop_image);
             popular_movie.container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent (context, DetailActivity.class);
-                    i.putExtra("title", movies.get(position).getTitle());
                     i.putExtra("movie", Parcels.wrap(movies.get(position)));
                     context.startActivity(i);
+
                     //Toast.makeText(context,movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -103,9 +109,23 @@ public class MovieAdapter extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent (context, DetailActivity.class);
-                    i.putExtra("title", movies.get(position).getTitle());
                     i.putExtra("movie", Parcels.wrap(movies.get(position)));
-                    context.startActivity(i);
+
+
+                    View view1 = (View) normalMovie.tvTitle;
+                    View view2 = (View) normalMovie.tvOverview;
+                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation((Activity)context,
+                            Pair.create(view1, "tvTitleTransition"),
+                            Pair.create(view2, "tvOverViewTransition"));
+
+                    /*
+                    Pair<View, String> p1 = Pair.create(,  );
+                    Pair<View, String> p2 = Pair.create((View) normalMovie.tvOverview, );
+
+                     */
+                    //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)context, p1, p2);
+                    //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)context,normalMovie.tvTitle, ViewCompat.getTransitionName(normalMovie.tvTitle) );
+                    context.startActivity(i,transitionActivityOptions.toBundle());
                     //Toast.makeText(context,movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
                 }
             });

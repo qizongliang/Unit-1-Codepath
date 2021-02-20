@@ -53,8 +53,13 @@ public class DetailActivity extends YouTubeBaseActivity{
                         return;
                     }
                     String youtubeKey  = results.getJSONObject(0).getString("key");
-                    Log.d("DetailActivity",youtubeKey);
-                    initializeYoutube(youtubeKey);
+                    if(movie.getStars() > 5.0){
+                        initializeYoutubeauto(youtubeKey);
+                    }else{
+                        initializeYoutube(youtubeKey);
+                    }
+
+
                 } catch (JSONException e) {
                     Log.e("DetailActivity","Failed to parse JSON",e);
                     e.printStackTrace();
@@ -82,4 +87,21 @@ public class DetailActivity extends YouTubeBaseActivity{
             }
         });
     }
+
+    private void initializeYoutubeauto(final String youtubeKey){
+        youTubePlayerView.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener(){
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                Log.d("DetailActivity","onSuccess" );
+                youTubePlayer.loadVideo(youtubeKey);
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                Log.d("DetailActivity","onFailure" );
+            }
+        });
+    }
+
+
 }
