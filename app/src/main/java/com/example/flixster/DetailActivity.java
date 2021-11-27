@@ -18,6 +18,7 @@ import com.google.android.youtube.player.YouTubePlayerView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import okhttp3.Headers;
 
@@ -27,12 +28,14 @@ public class DetailActivity extends YouTubeBaseActivity{
     TextView tvtitle;
     TextView tvOverview;
     RatingBar ratingBar;
+    TextView tvRldate;
     YouTubePlayerView youTubePlayerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        tvRldate =findViewById(R.id.tvRldate);
         tvtitle = findViewById(R.id.tvtitle);
         tvOverview = findViewById(R.id.tvoverview);
         ratingBar = findViewById(R.id.ratingBar);
@@ -42,6 +45,10 @@ public class DetailActivity extends YouTubeBaseActivity{
         tvtitle.setText(movie.getTitle());
         tvOverview.setText(movie.getOverview());
         ratingBar.setRating((float) movie.getStars());
+
+        String placeholder =getResources().getString(R.string.release_date)+movie.getRelease_date();
+
+        tvRldate.setText(placeholder);
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(String.format(VIDEOS_URL, movie.getMovieID()), new JsonHttpResponseHandler() {

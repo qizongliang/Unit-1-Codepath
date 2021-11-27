@@ -15,6 +15,7 @@ public class Movie {
     String posterPath;
     String title;
     String overview;
+    String release_date;
     double stars;
 
     public Movie(){
@@ -29,6 +30,8 @@ public class Movie {
         overview = jsonObject.getString("overview");
         stars = jsonObject.getDouble("vote_average");
         movieID = jsonObject.getInt("id");
+        release_date = jsonObject.getString("release_date");
+
     }
     public static List<Movie> fromJsonArray(JSONArray movieJsonArray) throws JSONException {
         List<Movie> movies = new ArrayList<>();
@@ -58,4 +61,6 @@ public class Movie {
     public int getMovieID() {
         return movieID;
     }
+
+    public String getRelease_date(){return  release_date;}
 }
